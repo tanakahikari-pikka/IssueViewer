@@ -19,6 +19,10 @@ const App: React.FC = () => {
           }
         />
         <Route path="/issues" element={<Issues />} />
+        <Route
+          path="*"
+          element={<h1>404: ページが見つかりませんでした。</h1>}
+        />
       </Routes>
     </div>
   );
