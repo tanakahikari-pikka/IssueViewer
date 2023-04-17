@@ -2,12 +2,17 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
-import { IssueValues } from "./types";
+import { IssueValues, State } from "./types";
 import { useQuery } from "@apollo/client";
+import Issues from "./Issues";
+
 import {
   SearchRepositoriesDocument,
   SearchRepositoriesQuery,
   Repository,
+  GetRepositoryIssuesQuery,
+  GetRepositoryIssuesDocument,
+  Issue,
 } from "../generated/graphql";
 
 // 公開されているすべてのリポジトリを検索
@@ -50,14 +55,26 @@ export const GlobalRepositoryList = ({
   );
 };
 
-export const IssueList = ({ issues }: { issues: IssueValues | undefined }) => {
+export const IssueList = ({ repo_ids }: { repo_ids: State }) => {
+  const { data, loading, error } = useQuery<GetRepositoryIssuesQuery>(
+    GetRepositoryIssuesDocument,
+    { variables: { repo_ids: repo_ids } }
+  );
+
   return (
     <List>
-      {issues?.issues.edges.map((issue) => (
-        <ListItem key={issue.node.title} divider>
-          <ListItemText primary={issue.node.title} />
-        </ListItem>
-      ))}
+      {data &&
+        data?.nodes
+          .filter((e): e is Repository => {
+            return e?.__typename === "Repository";
+          })
+          .map((repository) =>
+            repository.issues.edges?.map((issue) => (
+              <ListItem key={issue?.node?.title} divider>
+                <ListItemText primary={issue?.node?.title} />
+              </ListItem>
+            ))
+          )}
     </List>
   );
 };
