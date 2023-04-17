@@ -2,9 +2,8 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
-import { IssueValues, State } from "./types";
+import { State } from "./types";
 import { useQuery } from "@apollo/client";
-import Issues from "./Issues";
 
 import {
   SearchRepositoriesDocument,
@@ -15,7 +14,7 @@ import {
   Issue,
 } from "../generated/graphql";
 
-// 公開されているすべてのリポジトリを検索
+// 公開されているすべてのリポジトリの一覧
 export const GlobalRepositoryList = ({
   query,
   cursor,
@@ -45,7 +44,7 @@ export const GlobalRepositoryList = ({
                   fontWeight: "bold",
                 }}
                 to="/issues"
-                state={{ repo_ids: edge.id }}>
+                state={{ repoId: edge.id }}>
                 <ListItemText>Repository Name:{edge.name}</ListItemText>
                 <ListItemText>Descriptiion:{edge.description}</ListItemText>
               </Link>
@@ -55,10 +54,10 @@ export const GlobalRepositoryList = ({
   );
 };
 
-export const IssueList = ({ repo_ids }: { repo_ids: State }) => {
+export const IssueList = ({ repoId }: { repoId: string }) => {
   const { data, loading, error } = useQuery<GetRepositoryIssuesQuery>(
     GetRepositoryIssuesDocument,
-    { variables: { repo_ids: repo_ids } }
+    { variables: { repoId: repoId } }
   );
 
   return (

@@ -1,5 +1,5 @@
-query GetRepositoryIssues($repo_ids: [ID!]!) {
-  nodes(ids: $repo_ids) {
+query GetRepositoryIssues($repoId: [ID!]!) {
+  nodes(ids: $repoId) {
     ... on Repository {
       id
       name

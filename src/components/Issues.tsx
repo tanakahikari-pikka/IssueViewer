@@ -7,8 +7,7 @@ import { IssueList } from "./List";
 
 const Issues: React.FC = () => {
   const location = useLocation();
-  const { repo_ids } = location.state as State;
-
+  const { repoId } = location.state as State;
   return (
     <div>
       <Header />
@@ -21,7 +20,7 @@ const Issues: React.FC = () => {
           </Button>
           <h2> Issues:</h2>
           <Box>
-            <IssueList repo_ids={repo_ids} />
+            <IssueList repoId={repoId} />
           </Box>
         </Paper>
       </Container>

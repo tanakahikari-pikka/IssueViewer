@@ -16,20 +16,6 @@ export interface InfiniteScrollValues {
   threshold: number;
 }
 
-export interface Issue {
-  title: string;
-}
-
-export interface IssueValues {
-  id: string;
-  name: string;
-  issues: {
-    edges: {
-      node: Issue;
-    }[];
-  };
-}
-
 export interface State {
-  repo_ids: any;
+  repoId: string;
 }
