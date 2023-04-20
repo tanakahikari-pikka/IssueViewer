@@ -20,6 +20,11 @@ const Repos: React.FC = () => {
         <Paper sx={{ padding: 4, marginY: 5 }}>
           <SearchForm onSubmit={onSubmit} />
           <InfiniteScroll loadMore={loadMore} hasMore={false}>
+            {/* リポジトリ・イシューがない時のメッセージ・バリデーション */}
+            {/* 必要な情報の強弱 */}
+            {/* その画面の目的・役割はなんなのか */}
+            {/* ペルソナを策定する → 目的に沿ったUIを作っていくことができる　*/}
+            {/* 一つのリポジトリにhover判定をつける */}
             <GlobalRepositoryList query={promptValue} cursor={endCursor} />
           </InfiniteScroll>
         </Paper>
